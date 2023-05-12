@@ -131,11 +131,11 @@ input:focus {
 
 
 	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-		<!-- Navbar content -->
 	</nav>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="#">Student Registration</a>
+		<a class="navbar-brand" th:href="@{/student/list}">Student
+			Registration</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -144,17 +144,11 @@ input:focus {
 
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a th:href="@{new}" class="btn btn-primary"><i
-					class="fa fa-plus" aria-hidden="true"></i>Insert</a>
+				<a th:href="@{/student/new}" class="btn btn-primary"><i
+					class="fa fa-plus" aria-hidden="true"></i>Add Student</a>
 			</div>
-			<div class="navbar-nav">
-				<a th:href="@{view}" class="btn btn-primary"><i
-					class="fa fa-eye"></i>View</a>
-			</div>
-			<div class="navbar-nav">
-				<a th:href="@{delete}" class="btn btn-primary"><i
-					class="fa fa-trash" aria-hidden="true"></i>Delete</a>
-			</div>
+
+
 			<div class="navbar-nav">
 				<a th:href="@{print}" class="btn btn-primary"> <i
 					class="fa fa-print" aria-hidden="true"></i>Print
@@ -162,7 +156,7 @@ input:focus {
 			</div>
 
 			<div class="form-group">
-				<form th:action="@{logout}" method="post">
+				<form th:action="@{/logout}" method="post">
 					<button id="logout" type="submit" class="btn login_btn1">
 						<i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Logout
 					</button>
@@ -171,8 +165,9 @@ input:focus {
 			</div>
 
 		</div>
-
 	</nav>
+
+
 	<br>
 	<br>
 	<div class="container">
@@ -183,7 +178,8 @@ input:focus {
 				<h3 class="text-center  "
 					style="color: white; background-color: #3B71CA">Add Student</h3>
 				<div class="card-body">
-					<form th:action="@{/students}" th:object="${student}" method="POST">
+					<form th:action="@{/student/save}" th:object="${student}"
+						method="POST">
 						<div class="form-group">
 							<label> <b>First Name</b>
 							</label> <input type="text" name="fname" th:field="*{fname}"
@@ -228,8 +224,9 @@ input:focus {
 								<i class="fa fa-check" style="font-size: 20px; color: green"></i>
 								&nbsp;Submit
 							</button>
-							&nbsp;&nbsp; <a class="btn btn-primary " th:href="@{/}"> <i
-								class="fa fa-ban" style="font-size: 15px; color: red"> </i>&nbsp;Cancel
+							&nbsp;&nbsp; <a class="btn btn-primary "
+								th:href="@{/student/list}"> <i class="fa fa-ban"
+								style="font-size: 15px; color: red"> </i>&nbsp;Cancel
 							</a>
 
 						</div>

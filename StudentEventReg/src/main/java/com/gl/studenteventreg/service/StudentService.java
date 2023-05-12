@@ -19,4 +19,10 @@ public interface StudentService {
 
 	void deleteStudentById(Long id);
 
+	Student findById(int id);
+
+	void save(Student theStudent);
+
+	List<Student> findAll();
+
 }

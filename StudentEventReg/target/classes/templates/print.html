@@ -121,22 +121,9 @@ input:focus {
 	border-radius: 0;
 }
 
-@media print {
-	* {
-		display: none;
-	}
-	#printableTable {
-		display: block;
-	}
-}
-
 #logout {
 	color: white;
 	font-size: 25px;
-}
-
-#printBtn {
-	width: 10%;
 }
 </style>
 </head>
@@ -144,31 +131,24 @@ input:focus {
 
 
 	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-		<!-- Navbar content -->
 	</nav>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="#">Student Registration</a>
+		<a class="navbar-brand" th:href="@{/student/list}">Student
+			Registration</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
 			aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a th:href="@{new}" class="btn btn-primary"><i
-					class="fa fa-plus" aria-hidden="true"></i>Insert</a>
+				<a th:href="@{/student/new}" class="btn btn-primary"><i
+					class="fa fa-plus" aria-hidden="true"></i>Add Student</a>
 			</div>
-			<div class="navbar-nav">
-				<a th:href="@{view}" class="btn btn-primary"><i
-					class="fa fa-eye"></i>View</a>
-			</div>
-			<div class="navbar-nav">
-				<a th:href="@{delete}" class="btn btn-primary"><i
-					class="fa fa-trash" aria-hidden="true"></i>Delete</a>
-			</div>
+
+
 			<div class="navbar-nav">
 				<a th:href="@{print}" class="btn btn-primary"> <i
 					class="fa fa-print" aria-hidden="true"></i>Print
@@ -176,7 +156,7 @@ input:focus {
 			</div>
 
 			<div class="form-group">
-				<form th:action="@{logout}" method="post">
+				<form th:action="@{/logout}" method="post">
 					<button id="logout" type="submit" class="btn login_btn1">
 						<i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Logout
 					</button>
@@ -185,22 +165,23 @@ input:focus {
 			</div>
 
 		</div>
-
 	</nav>
 
+	<br>
 	<div class="container">
 		<br>
 		<div class="row">
-			<h3>Print students' list</h3>
-			&nbsp;&nbsp;
-			<button id="printBtn" class="Button Button--outline"
-				onclick="printStudentlist()">
-				<b>Print</b>
-			</button>
+			<div class="col-md-12">
 
-			<br>
+				<center>
+					<h3>List of Students</h3>
+				</center>
+			</div>
+
 		</div>
+
 		<div id="studentList" class="row">
+
 
 
 			<table class="table table-hover table-border">
@@ -226,6 +207,21 @@ input:focus {
 				</tbody>
 			</table>
 
+		</div>
+
+		<div class="row">
+			<div class="w-25 mx-auto">
+				&nbsp;&nbsp;
+				<button id="printBtn" class="btn btn-primary"
+					onclick="printStudentlist()">
+					<b>Print</b>
+				</button>
+				&nbsp;&nbsp;&nbsp;&nbsp; <a class="btn btn-primary "
+					th:href="@{/student/list}"> <i class="fa fa-ban"
+					style="font-size: 15px; color: red"> </i>&nbsp;Cancel
+				</a>
+
+			</div>
 		</div>
 	</div>
 	<iframe name="print_frame" width="0" height="0" frameborder="0"

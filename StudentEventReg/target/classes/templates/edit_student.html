@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="ISO-8859-1">
 <title>Student Registration</title>
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -23,12 +25,100 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
+
 <style>
-textarea {
-	overflow-y: scroll;
-	height: 200px;
-	resize: none;
+.myError {
+	color: red;
+}
+
+.myLogout {
+	color: green;
+}
+
+body {
+	background: white !important;
+}
+
+.card {
+	border: 1px solid #28a745;
+}
+
+.card-login {
+	margin-top: 130px;
+	padding: 18px;
+	max-width: 30rem;
+}
+
+.card-header {
+	color: #fff;
+	/*background: #ff0000;*/
+	font-family: sans-serif;
+	font-size: 20px;
+	font-weight: 600 !important;
+	margin-top: 10px;
+	border-bottom: 0;
+}
+
+.input-group-prepend span {
+	width: 50px;
+	background-color: #ff0000;
+	color: #fff;
+	border: 0 !important;
+}
+
+input:focus {
+	outline: 0 0 0 0 !important;
+	box-shadow: 0 0 0 0 !important;
+}
+
+.login_btn {
+	width: 130px;
+}
+
+.login_btn:hover {
+	color: #fff;
+	background-color: #ff0000;
+}
+
+.btn-outline-danger {
+	color: #fff;
+	font-size: 18px;
+	background-color: #28a745;
+	background-image: none;
+	border-color: #28a745;
+}
+
+.form-control {
+	display: block;
 	width: 100%;
+	height: calc(2.25rem + 2px);
+	padding: 0.375rem 0.75rem;
+	font-size: 1.2rem;
+	line-height: 1.6;
+	color: #28a745;
+	background-color: transparent;
+	background-clip: padding-box;
+	border: 1px solid #28a745;
+	border-radius: 0;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input-group-text {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	padding: 0.375rem 0.75rem;
+	margin-bottom: 0;
+	font-size: 1.5rem;
+	font-weight: 700;
+	line-height: 1.6;
+	color: #495057;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #e9ecef;
+	border: 1px solid #ced4da;
+	border-radius: 0;
 }
 
 #logout {
@@ -39,12 +129,13 @@ textarea {
 </head>
 <body>
 
+
 	<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-		<!-- Navbar content -->
 	</nav>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="#">Student Registration</a>
+		<a class="navbar-brand" th:href="@{/student/list}">Student
+			Registration</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -53,25 +144,19 @@ textarea {
 
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a th:href="@{/new}" class="btn btn-primary"><i
-					class="fa fa-plus" aria-hidden="true"></i>ins-Insert</a>
+				<a th:href="@{/student/new}" class="btn btn-primary"><i
+					class="fa fa-plus" aria-hidden="true"></i>Add Student</a>
 			</div>
+
+
 			<div class="navbar-nav">
-				<a th:href="@{/view}" class="btn btn-primary"><i
-					class="fa fa-eye"></i>homeView</a>
-			</div>
-			<div class="navbar-nav">
-				<a th:href="@{/delete}" class="btn btn-primary"><i
-					class="fa fa-trash" aria-hidden="true"></i>ins Delete</a>
-			</div>
-			<div class="navbar-nav">
-				<a th:href="@{/print}" class="btn btn-primary"> <i
-					class="fa fa-print" aria-hidden="true"></i>ins Print1
+				<a th:href="@{/student/print}" class="btn btn-primary"> <i
+					class="fa fa-print" aria-hidden="true"></i>Print
 				</a>
 			</div>
 
 			<div class="form-group">
-				<form th:action="@{logout}" method="post">
+				<form th:action="@{/logout}" method="post">
 					<button id="logout" type="submit" class="btn login_btn1">
 						<i class="fa fa-sign-out" aria-hidden="true"></i> &nbsp;Logout
 					</button>
@@ -80,10 +165,7 @@ textarea {
 			</div>
 
 		</div>
-
 	</nav>
-
-
 
 	<br>
 	<br>
@@ -97,7 +179,7 @@ textarea {
 				<h3 class="text-center "
 					style="color: white; background-color: #3B71CA">Edit Student</h3>
 				<div class="card-body">
-					<form th:action="@{/students/{id} (id=${student.id})}"
+					<form th:action="@{/student/save/{id} (id=${student.id})}"
 						th:object="${student}" method="POST">
 
 
@@ -135,8 +217,9 @@ textarea {
 							<button type="submit" class="btn btn-primary">
 								<i class="fa fa-check" style="font-size: 20px; color: green"></i>Submit
 							</button>
-							&nbsp;&nbsp;<a class="btn btn-primary " th:href="@{/view}"><i
-								class="fa fa-ban" style="font-size: 15px; color: red"> </i>&nbsp;Cancel</a>
+							&nbsp;&nbsp;<a class="btn btn-primary "
+								th:href="@{/student/list}"><i class="fa fa-ban"
+								style="font-size: 15px; color: red"> </i>&nbsp;Cancel</a>
 						</div>
 					</form>
 

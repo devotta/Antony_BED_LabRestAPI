@@ -7,56 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import com.gl.studenteventreg.entity.Student;
 import com.gl.studenteventreg.service.StudentService;
 
 @Controller
+@RequestMapping("/student")
 public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
 
-	public StudentController(StudentService studentService) {
-		super();
-		this.studentService = studentService;
-	}
-
-	@GetMapping("/")
-	public String showHome() {
-		return "home";
-	}
-
-	@GetMapping("/systems")
-	public String showSystems() {
-		return "systems";
-	}
-
-	@GetMapping("/leaders")
-	public String showLeaders() {
-		return "leaders";
-	}
-
-	@GetMapping("/view")
+	@RequestMapping("/list")
 	public String liststudents(Model model) {
 		model.addAttribute("students", studentService.getAllStudents());
 		return "view";
-	}
-
-	public String showView() {
-
-		return "view";
-	}
-
-	@GetMapping("/delete")
-	public String deleteStudents(Model model) {
-		model.addAttribute("students", studentService.getAllStudents());
-		return "delete";
-	}
-
-	@GetMapping("/insert")
-	public String showInsert() {
-		return "insert";
 	}
 
 	@GetMapping("/print")
@@ -66,10 +31,21 @@ public class StudentController {
 		return "print";
 	}
 
-	// add request mapping for /access-denied
 	@GetMapping("/access-denied")
 	public String showAccessDenied() {
 		return "access-denied";
+
+	}
+
+	@GetMapping("/")
+	public String login() {
+		return "redirect:/student/list";
+
+	}
+
+	@GetMapping("/logout")
+	public String logout() {
+		return "redirect:/login";
 
 	}
 
@@ -83,22 +59,22 @@ public class StudentController {
 
 		return "insert";
 
-	}
+	} // pass
 
-	@GetMapping("/students/edit/{id}")
+	@GetMapping("/edit/{id}")
 	public String editstudentForm(@PathVariable Long id, Model model) {
 		model.addAttribute("student", studentService.getStudentById(id));
 		return "edit_student";
 	}
 
-	@PostMapping("/students")
+	@PostMapping("/save")
 	public String saveStudent(@ModelAttribute("student") Student student) {
 
 		studentService.saveStudent(student);
-		return "redirect:/";
+		return "redirect:/student/list";
 	}
 
-	@PostMapping("/students/{id}")
+	@PostMapping("/save/{id}")
 	public String updatestudent(@PathVariable Long id, @ModelAttribute("student") Student student, Model model) {
 
 		// get student from database by id
@@ -113,13 +89,13 @@ public class StudentController {
 		// save updated student object
 		studentService.updateStudent(existingStudent);
 
-		return "redirect:/";
+		return "redirect:/student/list";
 	}
 
-	@GetMapping("/students/{id}")
+	@GetMapping("/delete/{id}")
 	public String deletestudent(@PathVariable Long id) {
 		studentService.deleteStudentById(id);
-		return "redirect:/delete";
+		return "redirect:/student/list";
 	}
 
 }

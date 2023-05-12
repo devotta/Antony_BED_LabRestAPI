@@ -12,13 +12,13 @@ import com.gl.studenteventreg.service.StudentService;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+	@Autowired
+	private StudentRepository studentRepository;
+
 	public StudentServiceImpl(StudentRepository studentRepository) {
 
 		this.studentRepository = studentRepository;
 	}
-
-	@Autowired
-	private StudentRepository studentRepository;
 
 	@Override
 	public List<Student> getAllStudents() {
@@ -47,6 +47,21 @@ public class StudentServiceImpl implements StudentService {
 	public void deleteStudentById(Long id) {
 		studentRepository.deleteById(id);
 
+	}
+
+	@Override
+	public Student findById(int id) {
+		return null;
+	}
+
+	@Override
+	public void save(Student theStudent) {
+
+	}
+
+	@Override
+	public List<Student> findAll() {
+		return null;
 	}
 
 }
