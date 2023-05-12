@@ -1,0 +1,22 @@
+-- Create database : STUDENT_DB
+CREATE DATABASE STUDENT_DB;
+
+-- Run the following script after running the application to create required tables
+USE STUDENT_DB;
+-- Create users kumar & amit password set to 123
+insert into USERS(user_id,password,username) values (1,'$2a$04$WaWnqzosZ.cH7XBUkHn94eZ/4DeLhAw.06OReR4/0JhDtfodn6ZGO','kumar');
+insert into USERS(user_id,password,username) values (2,'$2a$04$WaWnqzosZ.cH7XBUkHn94eZ/4DeLhAw.06OReR4/0JhDtfodn6ZGO','amit');
+
+select * from users;
+
+-- Create two roles ADMIN and USER
+INSERT INTO ROLES(role_id,name) values (1,'ADMIN');
+INSERT INTO ROLES(role_id,name) values (2,'USER');
+select * from roles;
+
+-- Assign roles  kumar as ADMIN & amit as USER
+INSERT INTO USERS_ROLES(user_id,role_id) values(1,1);
+INSERT INTO USERS_ROLES(user_id,role_id) values(2,2);
+SELECT * FROM USERS_ROLES;
+
+select * from Student
